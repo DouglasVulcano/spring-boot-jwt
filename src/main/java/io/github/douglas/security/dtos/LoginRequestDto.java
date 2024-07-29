@@ -1,7 +1,6 @@
 package io.github.douglas.security.dtos;
 
-public record LoginRequest(
+public record LoginRequestDto(
         String username,
         String password) {
-
 }

@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import io.github.douglas.security.dtos.LoginRequest;
-import io.github.douglas.security.dtos.LoginResponse;
+import io.github.douglas.security.dtos.LoginRequestDto;
+import io.github.douglas.security.dtos.LoginResponseDto;
 import io.github.douglas.security.repositories.UserRepository;
 import lombok.AllArgsConstructor;
 
@@ -33,7 +33,7 @@ public class TokenController {
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @PostMapping("/login")
-    public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest loginRequest) {
+    public ResponseEntity<LoginResponseDto> login(@RequestBody LoginRequestDto loginRequest) {
         var user = userRepository.findByUsername(loginRequest.username());
         var now = Instant.now();
         Long expiresIn = 3600L;
@@ -50,6 +50,6 @@ public class TokenController {
                 .build();
 
         var token = jwtEncoder.encode(JwtEncoderParameters.from(claims)).getTokenValue();
-        return ResponseEntity.status(HttpStatus.OK).body(new LoginResponse(token, expiresIn));
+        return ResponseEntity.status(HttpStatus.OK).body(new LoginResponseDto(token, expiresIn));
     }
 }

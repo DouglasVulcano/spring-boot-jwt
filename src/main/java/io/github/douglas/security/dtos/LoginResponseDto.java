@@ -1,6 +1,6 @@
 package io.github.douglas.security.dtos;
 
-public record LoginResponse(
+public record LoginResponseDto(
         String token,
         Long expiresIn) {
 }
